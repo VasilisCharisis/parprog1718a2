@@ -12,26 +12,26 @@
 
 void welocmeMessage(int *nPtr);
 int fillitem();
-int n;                                 //Áñéèìüò ìÞêïõò ôçò ïõñÜò.Global variable.
+int n;                                 //Μεταβλητή για το μήκος της ουρά;.Global variable.
 int maxrand;
 int message;
 //=====================================================================================(struct)
-struct cell{          //ÄÞëùóç äïìÞò.
-	int data;          //Èá ëáìâÜíåé ìåôáâëçôÝò integer ùò äåäïìÝíá.(Ìçíýìáôá)          
-	struct cell *nextcellptr;  //ÄÝéêôçò ãéá ôïí åðüìåíï êüìâï.
+struct cell{          //Όρισμα δομής cell.
+	int data;          //Περιεχόμενο που περιέχει η δομή cell.          
+	struct cell *nextcellptr;  //Δείκτης προς την επόμενη δομή.
 	};
-typedef struct cell queue;//Óõíþíõìï ôçò äïìÞò Queue
-typedef queue *queueptr;//Pointer ðïõ äåß÷íåé ôï Queue
-void enqueue(queueptr *headerptr,queueptr *tailptr,int value);
-int isEmpty(queueptr headerptr);
-void printQueue(queueptr currentptr);
+typedef struct cell queue;//Δημιουργία μεταβλητής queue που περιέχει struct cell
+typedef queue *queueptr;//Δείκτης Queeu
+void enqueue(queueptr *headerptr,queueptr *tailptr,int value);//Δήλωση εισάγωγης σε queue
+int isEmpty(queueptr headerptr);//Συνάρτηση αν το header της qeueue ειναι ΝULL δλδ δεν δέιχνει πουθένα σε νέο cell
+void printQueue(queueptr currentptr);//Εκτύπωση της ουράς
 int arr[Maxsize];
 void swap(int* a, int* b){
-	int temp = *a;
+	int temp = *a;             //Αλλαγή των θέσεων μέσα στον πίνακα όταν πραγματοποιείται η qucikshort
 	*a = *b;
 	*b = temp;
 }
-int quick_sort(int left, int right);
+int quick_sort(int left, int right);//Όρισμα quickshprt
 
 
 
@@ -39,21 +39,21 @@ int quick_sort(int left, int right);
 //=============================================================================================
 typedef struct task_data {
 	int id;
-	int left;
+	int left;                 //όρισμα του δεδομένου μεταξύ threads
 	int right;
 	int lchild_id;
 	int rchild_id;
 }task_data;
 
 typedef struct thread_data {
-	pthread_t thread;
+	pthread_t thread;           //Αλλαγή δεδομένων μέσω threads
 	sem_t start;
 	task_data* task_range;
 }thread_data;
 
 sem_t finish;
 
-//Thread Queue declare
+//Thread Queue δήλωση
 thread_data* thread_pool[4];
 int thread_queue_rear, thread_queue_front;
 void thread_pool_init();
@@ -61,7 +61,7 @@ void puch_thread_queue(thread_data* pthdata);
 thread_data* pop_thread_queue();
 sem_t thread_mutex;
 sem_t thread_flag;
-//JOB Queue declare
+//JOB Queue δήλωση
 task_data* job_pool[4];
 int jobrear, jobfront;
 void task_pool_init();
@@ -70,7 +70,7 @@ task_data* pop_job_queue();
 sem_t job_mutex;
 sem_t job_flag;
 
-//ÓõíÜñôçóç ðïõ åëÝã÷åé áí ç n&maxrand(global variables) åßíáé ìéêñüôåñç Þ ßóç ôïõ 0.
+//Συνάρτηση αρχικό μήνυματος.Ζητάει το μήκος της ουράς εργασιών και το ορίο της maxrand που θα γεμίσει την ουρά με τυχαία δεδομένα
 void welcomeMessage(int *nPtr)
 {
 	printf("Parralel programming.Assignment number 2 2017-2018!!! \n");
@@ -96,14 +96,16 @@ void welcomeMessage(int *nPtr)
 }
 	printf("N=%ld\nMaxrand=%ld\n",*nPtr,maxrand);
 
-}//ÔÝëïò óõíÜñôçóçò WeclomeMessage
+}//Τέλος δήλωσης welcomeMessage
 
 
-//Äçìéïõñßá óõíÜñôçóçò ðïõ äçìéïõñãåß ôõ÷ßá  messsage ìå üñéï ôßìçò ôï maxrand ðïõ Ýäùóå ï ÷ñÞóôçò
+//Δήλωση συνάρτησης fillitem 
 int fillitem(){
 	message=rand()%maxrand;
 	return message;
 }
+
+//Ξεκινάει η main
  main(void)
 {
 int item;
@@ -128,7 +130,7 @@ int z;
 	 
 	
 }
-//Äçìéïõñãßá ïõñÜò
+//Συνάρτιζει που "χτίζει την ουρά"
 void enqueue(queueptr *headerptr,queueptr *tailptr,int value){
 	queueptr newptr;
     newptr = (queue*)malloc(sizeof(queue));
@@ -151,12 +153,12 @@ void enqueue(queueptr *headerptr,queueptr *tailptr,int value){
 		printf("%d not inserted.No memory available.\n",value);
 	}
 }
-//¸ëåã÷ïò Üí o äåßêôçò ôçò ïõñÜò åßíáé 0.
+//Επιστρέφει αν ειναι 0.
 int isEmpty(queueptr headerptr)
 {
 	return headerptr==NULL;
 }
-//Åêôýðùóç ïõñÜò
+//Συνάρρτηση που εκτυπώνει την ουρά
 void printQueue(queueptr currentptr)
 {
 	if(currentptr==NULL)
@@ -174,6 +176,8 @@ void printQueue(queueptr currentptr)
 		}
 		printf("NULL\n");
 }
+
+//Δήλωση quickshort
 
 int quick_sort(int left, int right){
 
