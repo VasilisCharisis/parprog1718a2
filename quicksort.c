@@ -55,18 +55,13 @@ sem_t finish;
 
 //Thread Queue δήλωση
 thread_data* thread_pool[4];
-int thread_queue_rear, thread_queue_front;
-void thread_pool_init();
-void puch_thread_queue(thread_data* pthdata);
-thread_data* pop_thread_queue();
+
 sem_t thread_mutex;
 sem_t thread_flag;
 //JOB Queue δήλωση
 task_data* job_pool[4];
 int jobrear, jobfront;
-void task_pool_init();
-void push_job_queue(task_data* pjob_data);
-task_data* pop_job_queue();
+
 sem_t job_mutex;
 sem_t job_flag;
 
